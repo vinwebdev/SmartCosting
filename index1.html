@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cost Calculator</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #014996, #016e8b, #9cdbf1);
+        font-family: 'Poppins', sans-serif;
+        font-size: 13px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        min-height: 80vh; /* Ensures body occupies full viewport height */
+        margin: 30px 0 120px 0;
+    }
+   
+   
+    .container {
+        background: #fff;
+        width: 100%;
+        max-width: 450px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-radius: 12px;
+       
+    }
+    .container .logo_calculator {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        padding: 10px;
+        text-align: center;
+        width: 100%;}
+        
+    .logo_calculator img { width: 100px; /* optional, adjust logo size */  
+                           height: auto;  text-align: center;
+                        }
+    .logo_calculator h2 { color: #0056b3; /* for contrast */ 
+                          margin: 0; 
+                          font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                          font-size: 30px;}
+                          
+    
+    /* FLEXBOX FORM ROWS */
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+    }
+
+    .form-group label {
+        width: 45%;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 50%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;    
+    }
+
+    button {
+        width: 50%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+    }
+
+ /* CENTER BUTTON */
+    .button-row {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px; 
+    }
+
+    .button-row button{
+        width: 45%;
+    }
+    
+    button:hover {
+        background: #0056b3;
+    }
+
+    .result-box {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+    }
+
+    .result-box p {
+        margin: 8px 0;
+        font-size: 17px;
+    }
+    .result-value1 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 200px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+    .result-value2 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 168px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+    .result-value3 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 166px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+     .result-value4 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 148px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+     .result-value5 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 201px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+     .result-value6 { /* added class */
+        display: inline-block; /* or block, depending on your layout needs */
+        width: 137px; /* Adjust the width as needed */
+        text-align: right; /* or right, to align numbers to the right */
+    }
+       /* Basic modal styling (you can expand on this) */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black */
+        z-index: 1000;
+        /* Ensure it's on top */
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-button {
+        float: right;
+        cursor: pointer;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+     <span class= "logo_calculator">
+            <img src="ASL-Logo.png" alt="Company Logo" class="logo">
+            <h2>Smart Costing</h2>
+          </span>
+    <div class="form-group"> 
+                <label for="name">Client Name :</label>
+                <input type="text" id="name" placeholder="Client Name">
+            </div>
+    <div class="form-group">
+        <label>Type of Job</label>
+        <select id="jobType">
+            <option value="General">Local Move</option>
+            <option value="Specialized">Storage Move</option>
+            <option value="Custom">Export Move</option>
+            <option value="Custom">Import/Delivery</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Volume (m³) :</label>
+        <input type="text" class="auto-format" id="volume" placeholder="volume">
+    </div>
+
+    <div class="form-group">
+        <label>Days :</label>
+        <input type="text" class="auto-format" id="days" placeholder="no. of days">
+    </div>
+
+    <div class="form-group">
+        <label>Crew(s) No. :</label>
+        <input type="text" class="auto-format" id="crews" placeholder="crews per day">
+    </div>
+
+    <div class="form-group">
+        <label>Crew rate :</label>
+        <input type="text" class="auto-format" id="laborRate" placeholder="rate per day">
+    </div>
+
+    <div class="form-group">
+        <label>Materials :</label>
+        <input type="text" class="auto-format" id="materials" placeholder="materials costs">
+    </div>
+
+    <div class="form-group">
+        <label>Transportation :</label>
+        <input type="text" class="auto-format" id="transportation" placeholder="transpo. costs">
+    </div>
+
+    <div class="form-group">
+        <label>Others :</label>
+        <input type="text" class="auto-format" id="otherscost" placeholder="other/addtional cost">
+    </div>
+    <!-- CENTERED BUTTON -->
+    <div class="button-row">
+        <button onclick="computeCost()">Compute</button>
+        <button onclick="clearForm()">Clear</button>
+    </div>
+
+    <div class="result-box" id="result" style="display:none;">
+        <p>Labor Cost :<strong><span id="laborCost" class="result-value1"></span></strong></p>
+        <p>Materials Cost :<strong><span id="materialsCost" class="result-value2"></span></strong></p>
+        <p>Transportation :<strong><span id="transportationCost" class="result-value3"></span></strong></p>
+        <p>Operational Cost :<strong><span id="operationalCost" class="result-value4"></span></strong></p>
+        <p>Profit (30%) : <strong><span id="profit" class="result-value5"></span></strong></p>
+        <hr>
+        <p><strong>Total Project Cost :</strong> 
+            <strong><span id="totalCost" class="result-value6" style="font-size:20px;color:#020e52;"></strong></span>
+        </p>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Please fill in all the input fields.</p>
+        </div>
+    </div>
+</div>  
+
+<script> // Script that Format the numbers with comma and 2 decimal points
+// Reusable formatting function
+function formatNumberInputs() {
+    const inputs = document.querySelectorAll(".auto-format");
+
+    inputs.forEach(input => {
+
+        // LIVE formatting while typing (keep decimals)
+        input.addEventListener("input", function () {
+
+            let value = this.value.replace(/,/g, "");
+
+            // Allow only numbers + decimal
+            value = value.replace(/[^0-9.]/g, "");
+
+            // Prevent more than one decimal
+            const parts = value.split(".");
+            if (parts.length > 2) return;
+
+            // If user is still typing (ex: "12."), do NOT format yet
+            if (value.endsWith(".")) {
+                this.value = value;
+                return;
+            }
+
+            let num = parseFloat(value);
+
+            if (!isNaN(num)) {
+                // Format but keep decimal typed by user
+                this.value = num.toLocaleString("en-US", {
+                    minimumFractionDigits: parts[1] ? parts[1].length : 0,
+                    maximumFractionDigits: 2
+                });
+            }
+        });
+
+        // Add .00 on blur
+        input.addEventListener("blur", function () {
+            let value = this.value.replace(/,/g, "");
+            let num = parseFloat(value);
+
+            if (!isNaN(num)) {
+                this.value = num.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+        });
+
+    });
+}
+
+// Initialize formatting
+formatNumberInputs();
+</script>
+
+<script> //Script that compute the total operational cost
+function computeCost() {
+
+    // Helper function: remove commas
+    function cleanNumber(id) {
+        let val = document.getElementById(id).value.replace(/,/g, "");
+        return parseFloat(val) || 0;
+    }
+
+    const days = cleanNumber('days');
+    const crews = cleanNumber('crews');
+    const laborRate = cleanNumber('laborRate');
+
+    const materials = cleanNumber('materials');
+    const transportationExpenses = cleanNumber('transportation');
+    const others = cleanNumber('otherscost');
+
+    // Calculations
+    const laborCost = days * crews * laborRate;
+    const materialsCost = materials + others;
+    const transportationCost  = transportationExpenses;
+    const operationalCost = laborCost + materialsCost + transportationCost;
+
+    const profit = (operationalCost * 0.30); // 30%
+    const total = operationalCost + profit;
+
+     // Function to format numbers with commas
+  function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+    // Output
+    document.getElementById('laborCost').innerText = formatNumberWithCommas(laborCost.toFixed(2));
+    document.getElementById('materialsCost').innerText = formatNumberWithCommas(materialsCost.toFixed(2));
+    document.getElementById('transportationCost').innerText = formatNumberWithCommas(transportationCost.toFixed(2));
+    document.getElementById('operationalCost').innerText = formatNumberWithCommas(operationalCost.toFixed(2));
+    document.getElementById('profit').innerText = formatNumberWithCommas(profit.toFixed(2));
+    document.getElementById('totalCost').innerText = formatNumberWithCommas(total.toFixed(2));
+
+    document.getElementById('result').style.display = 'block';
+}
+</script>
+
+
+<script> //acript that clear the input contents
+    function clearForm() {
+    document.querySelectorAll("input").forEach(i => i.value = "");
+    document.getElementById("result").style.display = "none";
+}
+</script>
+</body>
+</html>
